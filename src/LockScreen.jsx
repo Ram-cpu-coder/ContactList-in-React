@@ -1,8 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const LockScreen = ({ setRangerValue }) => {
+const LockScreen = ({ setRangerValue, rangerValue }) => {
+  const handleOnChange = (e) => {
+    setRangerValue(e.target.value);
+  };
+  useEffect(() => {
+    if (rangerValue < 70) {
+      setRangerValue(0);
+    } else {
+      setRangerValue(100);
+    }
+  }, [rangerValue]);
   return (
-    <main id="lockScreen" className="screen relative h80">
+    <main
+      id="lockScreen"
+      className={`screen relative h80 ${rangerValue < 70 ? "block" : "hidden"}`}
+    >
       <div className="h100 flex flex-col justify-center items-center">
         {/* <!-- time and day --> */}
         <div className="time-css flex flex-col items-center">
@@ -20,10 +33,8 @@ const LockScreen = ({ setRangerValue }) => {
             className="slider w-full"
             min="0"
             max="100"
-            value="0"
-            onChange={(e) => {
-              setRangerValue(e.target.value);
-            }}
+            value={rangerValue}
+            onChange={handleOnChange}
           />
         </div>
       </div>
