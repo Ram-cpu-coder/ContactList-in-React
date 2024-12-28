@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { BsSearch } from "react-icons/bs";
 
+import ContactList from "./ContactList";
+
 const ContactScreen = ({ displayContact }) => {
+  const [loading, setLoading] = useState("hidden");
   const backToLock = () => {};
   return (
     <main id="contactListScreen" className={`screen ${displayContact}`}>
@@ -31,7 +34,7 @@ const ContactScreen = ({ displayContact }) => {
           role="status"
           id="spinner"
         >
-          <span className="visually-hidden">Loading...</span>
+          <span className={`${loading}`}>Loading...</span>
         </div>
       </div>
 
@@ -41,7 +44,8 @@ const ContactScreen = ({ displayContact }) => {
           <span id="userCount">0</span> Contacts
         </div>
         <div className="accordion" id="contactAccordion">
-          {/* <!-- <div className="accordion-item">
+          <ContactList />
+          {/* <div className="accordion-item">
                 <h2 className="accordion-header">
                     <button className="accordion-button" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -85,7 +89,7 @@ const ContactScreen = ({ displayContact }) => {
                         </div>
                     </div>
                 </div>
-            </div> --> */}
+            </div>  */}
         </div>
 
         {/* <!-- <div className="accordion" id="contactAccordion">
