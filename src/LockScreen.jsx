@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 const LockScreen = ({ setRangerValue, rangerValue }) => {
   const handleOnChange = (e) => {
     setRangerValue(e.target.value);
   };
-  useEffect(() => {
-    if (rangerValue < 70) {
-      setRangerValue(0);
-    } else {
-      setRangerValue(100);
-    }
-  }, [rangerValue]);
+
   return (
     <main
       id="lockScreen"

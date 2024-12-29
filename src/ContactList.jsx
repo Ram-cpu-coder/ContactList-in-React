@@ -8,10 +8,9 @@ import { FaLocationDot } from "react-icons/fa6";
 import { Accordion } from "flowbite-react";
 
 const ContactList = ({ dataList }) => {
-  const tempDataList = [...dataList];
   return (
     <Accordion collapseAll className="bg-white text-black">
-      {tempDataList.map((item) => (
+      {dataList.map((item) => (
         <Accordion.Panel>
           <Accordion.Title>
             <div className="flex items-center">
