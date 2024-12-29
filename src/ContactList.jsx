@@ -1,60 +1,75 @@
 "use client";
 import React from "react";
+import { BsFillPersonFill } from "react-icons/bs";
+import { FaPhone } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
+import { FaLocationDot } from "react-icons/fa6";
 
 import { Accordion } from "flowbite-react";
 
-const ContactList = () => {
+const ContactList = ({ dataList }) => {
+  const tempDataList = [...dataList];
   return (
     <Accordion collapseAll className="bg-white text-black">
-      <Accordion.Panel>
-        <Accordion.Title>
-          <div className="flex items-center">
-            <img
-              src="./images/ram.png"
-              width="50px"
-              height="50px"
-              className="rounded-full"
-            />
-            <div className="flex flex-col">
-              <div className="font-bold">Ram Kumar Dhimal</div>
-              <div>Sydney, Australia</div>
-            </div>
-          </div>
-        </Accordion.Title>
-        <Accordion.Content>
-          <div className="flex flex-col justify-center items-center">
-            <img
-              src="./images/ram.png"
-              alt=""
-              srcset=""
-              height="150px"
-              width="150px"
-              className="rounded-full"
-            />
-            <div className="d-flex flex-column mt-2">
-              <div className="">
-                <i className="bi bi-person-fill fs-5"></i>
-                <span>Ram Kumar Dhimal</span>
-              </div>
-
-              <div className="">
-                <i className="bi bi-phone-fill fs-5"></i>
-                <span>+61 042565666</span>
-              </div>
-
-              <div className="">
-                <i className="bi bi-envelope-fill"></i>
-                <span>ram@gmail.com</span>
-              </div>
-
-              <div className="">
-                <i className="bi bi-geo-alt-fill"></i>
-                <span>Sydney, Australia</span>
+      {tempDataList.map((item) => (
+        <Accordion.Panel>
+          <Accordion.Title>
+            <div className="flex items-center">
+              <img
+                src={item.picture.medium}
+                width="50px"
+                height="50px"
+                className="rounded-full"
+              />
+              <div className="flex flex-col">
+                <div className="font-bold">
+                  {item.name.title} {item.name.first} {item.name.second}
+                </div>
+                <div>
+                  {item.location.city}, {item.location.country}
+                </div>
               </div>
             </div>
-          </div>
-        </Accordion.Content>
-      </Accordion.Panel>
+          </Accordion.Title>
+          <Accordion.Content>
+            <div className="flex flex-col justify-center items-center">
+              <img
+                src={item.picture.medium}
+                alt=""
+                srcset=""
+                height="150px"
+                width="150px"
+                className="rounded-full"
+              />
+              <div className="d-flex flex-column mt-2">
+                <div className="">
+                  <BsFillPersonFill />
+                  <span>
+                    {item.name.title} {item.name.first} {item.name.second}
+                  </span>
+                </div>
+
+                <div className="">
+                  <FaPhone />
+                  <span>+61 042565666</span>
+                </div>
+
+                <div className="">
+                  <MdEmail />
+                  <span>{item.email}</span>
+                </div>
+
+                <div className="">
+                  <FaLocationDot />
+                  <span>
+                    {item.location.city}, {item.location.country}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Accordion.Content>
+        </Accordion.Panel>
+      ))}
     </Accordion>
   );
 };

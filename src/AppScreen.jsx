@@ -3,7 +3,7 @@ import { RiContactsBook3Line } from "react-icons/ri";
 
 import ContactScreen from "./ContactScreen";
 
-const AppScreen = ({ rangerValue, setRangerValue }) => {
+const AppScreen = ({ rangerValue, dataList }) => {
   const [displayContact, setDisplayContact] = useState("hidden");
   const [displayApp, setDisplayApp] = useState("hidden");
 
@@ -28,7 +28,7 @@ const AppScreen = ({ rangerValue, setRangerValue }) => {
           <span>Contact</span>
         </div>
       </main>
-      <ContactScreen displayContact={displayContact} />
+      <ContactScreen displayContact={displayContact} dataList={dataList} />
     </div>
   );
 };
