@@ -1,12 +1,31 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { BsSearch } from "react-icons/bs";
 
 import ContactList from "./ContactList";
 
 const ContactScreen = ({ displayContact, dataList }) => {
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredItems, setFilteredItems] = useState([]);
   const [loading, setLoading] = useState("hidden");
   const backToLock = () => {};
+  const searchRef = useRef("");
+
+  const handleSearch = () => {
+    const searchRefItem = searchRef.current.value;
+
+    setSearchValue(searchRefItem);
+
+    const filteredItem = dataList.filter((item) => {
+      return (
+        item.name.first.toLowerCase().includes(searchValue.toLowerCase()) ||
+        item.name.last.toLowerCase().includes(searchValue.toLowerCase())
+      );
+    });
+    setFilteredItems(filteredItem);
+
+    console.log(filteredItems);
+  };
   return (
     <main id="contactListScreen" className={`screen ${displayContact}`}>
       {/* <!-- header --> */}
@@ -24,8 +43,13 @@ const ContactScreen = ({ displayContact, dataList }) => {
           id="search"
           placeholder="Search Contact"
           className="rounded-lg w-full h-[50px] text-[black]"
+          ref={searchRef}
+          //   value={searchValue}
         />
-        <BsSearch className="absolute searchIcon text-2xl text-[black]" />
+        <BsSearch
+          className="absolute searchIcon text-2xl text-[black]"
+          onClick={handleSearch}
+        />
       </div>
       {/* <!-- spinner --> */}
       <div className="text-center">
@@ -44,7 +68,7 @@ const ContactScreen = ({ displayContact, dataList }) => {
           <span id="userCount">0</span> Contacts
         </div>
         <div className="">
-          <ContactList dataList={dataList} />
+          <ContactList dataList={dataList} filteredItems={filteredItems} />
         </div>
       </div>
     </main>

@@ -41,25 +41,25 @@ const ContactList = ({ dataList }) => {
                 width="150px"
                 className="rounded-full"
               />
-              <div className="d-flex flex-column mt-2">
-                <div className="">
+              <div className="flex flex-col mt-2">
+                <div className="flex items-center gap-3">
                   <BsFillPersonFill />
                   <span>
                     {item.name.title} {item.name.first} {item.name.second}
                   </span>
                 </div>
 
-                <div className="">
+                <div className="flex items-center gap-3">
                   <FaPhone />
                   <span>+61 042565666</span>
                 </div>
 
-                <div className="">
+                <div className="flex items-center gap-3">
                   <MdEmail />
                   <span>{item.email}</span>
                 </div>
 
-                <div className="">
+                <div className="flex items-center gap-3">
                   <FaLocationDot />
                   <span>
                     {item.location.city}, {item.location.country}
