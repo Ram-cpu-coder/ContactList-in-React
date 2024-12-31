@@ -44,14 +44,14 @@ color: black;
   backdrop-filter: blur(20px);
 }
 
-.slider {
+#slider {
   appearance: none;
   z-index: 99;
   background-color: transparent;
   height: 70px;
 }
 
-.slider::-webkit-slider-thumb {
+#slider::-webkit-slider-thumb {
   appearance: none;
   width: 40px;
   height: 40px;

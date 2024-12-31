@@ -1,20 +1,36 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { BsSearch } from "react-icons/bs";
 
 import ContactList from "./ContactList";
 import LockScreen from "./LockScreen";
 
-const ContactScreen = ({ displayContact, dataList, setRangerValue }) => {
+const ContactScreen = ({ displayContact, setRangerValue }) => {
   const [searchValue, setSearchValue] = useState("");
-  const [locked, setLocked] = useState(false);
+  const [locked, setLocked] = useState(setRangerValue(100));
   const [filtered, setFiltered] = useState([]);
-  const [loading, setLoading] = useState("hidden");
-  // const [filteredItems, setFilteredItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  const [dataList, setDataList] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get("https://randomuser.me/api?results=50")
+      .then((response) => {
+        setDataList(response.data.results);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, []);
   const handleOnSearchInput = (e) => {
     setSearchValue(e.target.value);
   };
+
   const handleSearch = () => {
     const filteredItem = dataList.filter((item) => {
       return item.name.first.toLowerCase().includes(searchValue.toLowerCase());
@@ -23,7 +39,22 @@ const ContactScreen = ({ displayContact, dataList, setRangerValue }) => {
     setSearchValue("");
     setFiltered(filteredItem);
   };
-  console.log(filtered);
+
+  const handleEnter = (e) => {
+    if (e.key === "Enter") {
+      setFiltered(
+        dataList.filter((item) => {
+          return item.name.first
+            .toLowerCase()
+            .includes(searchValue.toLowerCase());
+        })
+      );
+      setSearchValue("");
+    } else {
+      ("");
+    }
+  };
+
   return locked ? (
     <LockScreen />
   ) : (
@@ -34,8 +65,7 @@ const ContactScreen = ({ displayContact, dataList, setRangerValue }) => {
           <IoLockClosedOutline
             className="text-2xl"
             onClick={() => {
-              setLocked(!locked);
-              setRangerValue(0);
+              setLocked(setRangerValue(0));
             }}
           />
         </div>
@@ -50,6 +80,7 @@ const ContactScreen = ({ displayContact, dataList, setRangerValue }) => {
           placeholder="Search Contact"
           className="rounded-lg w-full h-[50px] text-[black] px-3"
           onChange={handleOnSearchInput}
+          onKeyUp={handleEnter}
           value={searchValue}
         />
         <BsSearch
@@ -64,8 +95,9 @@ const ContactScreen = ({ displayContact, dataList, setRangerValue }) => {
           role="status"
           id="spinner"
         >
-          <span className={`${loading}`}>Loading...</span>
+          {loading ? <span>Loading...</span> : ""}
         </div>
+        {error ? <span>Error Loading</span> : ""}
       </div>
 
       {/* <!-- contact-list --> */}
@@ -75,7 +107,7 @@ const ContactScreen = ({ displayContact, dataList, setRangerValue }) => {
             <span id="userCount">{dataList.length}</span> Contacts
           </div>
           <div className="">
-            <ContactList dataList={dataList} filtered={filtered} />
+            <ContactList dataList={dataList} />
           </div>
         </div>
       ) : (

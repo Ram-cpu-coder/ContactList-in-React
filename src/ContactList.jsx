@@ -50,7 +50,7 @@ const ContactList = ({ dataList }) => {
 
                 <div className="flex items-center gap-3">
                   <FaPhone />
-                  <span>+61 042565666</span>
+                  <span>{item.cell}</span>
                 </div>
 
                 <div className="flex items-center gap-3">
